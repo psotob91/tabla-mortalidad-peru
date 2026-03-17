@@ -1,0 +1,208 @@
+---
+title: "tabla-mortalidad-peru"
+format:
+  gfm:
+    toc: true
+execute:
+  echo: false
+  warning: false
+  message: false
+editor: visual
+---
+
+# Tabla de mortalidad de Perú
+
+Repositorio reproducible para la construcción, interpolación, expansión a edad simple y control de calidad de tablas de mortalidad de Perú, con desagregación por sexo y departamento.
+
+## Resumen
+
+Este proyecto implementa un pipeline reproducible en **R** para transformar tablas de vida de mortalidad en tres productos principales:
+
+1.  **Tabla de mortalidad quinquenal de referencia**.
+2.  **Tabla anual abreviada interpolada**.
+3.  **Tabla anual expandida a edad simple**.
+
+Además, el proyecto genera artefactos de **control de calidad estructural y visual**, junto con diccionarios extendidos y especificaciones formales para validar integridad, tipos, rangos y claves primarias.
+
+## Objetivo
+
+Construir una base reproducible, auditable y reutilizable para estimar y documentar tablas de mortalidad de Perú, preservando:
+
+-   la **trazabilidad de la fuente pública original**,
+-   la **armonización de metadatos**,
+-   la **validación mediante especificaciones YAML**,
+-   la **consistencia de diccionarios y catálogos**, y
+-   la **documentación del control de calidad epidemiológico y estructural**.
+
+## Estructura sustantiva del proyecto
+
+La estructura operativa del proyecto se organiza en los siguientes componentes:
+
+### `config/`
+
+Contiene los insumos de parametrización y metadatos maestros:
+
+-   maestros de ubicación y sexo;
+-   parámetros globales del proyecto;
+-   especificaciones YAML de las tablas de vida.
+
+### `R/`
+
+Contiene funciones reutilizables para:
+
+-   lectura de rutas y convenciones del proyecto;
+-   validación estructural;
+-   control de calidad;
+-   construcción de diccionarios;
+-   registro de datasets y artefactos;
+-   manejo de catálogos y procedencia.
+
+### `scripts/`
+
+Contiene el pipeline principal:
+
+-   importación y armonización;
+-   interpolación anual abreviada;
+-   expansión a edad simple;
+-   generación de reportes visuales de QC.
+
+### `data/raw/`
+
+Contiene la fuente pública original utilizada como insumo primario del pipeline.
+
+### `data/final/`
+
+Contiene las salidas finales versionables del proyecto, en formato tabular ligero y con diccionario extendido.
+
+### `data/derived/qc/`
+
+Contiene salidas intermedias y tablas de QC generadas automáticamente.
+
+### `reports/`
+
+Contiene reportes visuales y sus índices auxiliares.
+
+## Productos principales
+
+Los principales datasets finales esperados son:
+
+### Tabla quinquenal
+
+-   `ref_life_table_mortality.csv`
+-   `ref_life_table_mortality_dictionary_ext.csv`
+
+### Tabla anual abreviada
+
+-   `annual_abridged/ref_life_table_mortality_annual_abridged.csv`
+-   `annual_abridged/ref_life_table_mortality_annual_abridged_dictionary_ext.csv`
+
+### Tabla anual a edad simple
+
+-   `single_age/ref_life_table_mortality_single_age.csv`
+-   `single_age/ref_life_table_mortality_single_age_dictionary_ext.csv`
+
+## Especificaciones y validación
+
+El proyecto usa especificaciones formales en YAML para declarar:
+
+-   columnas obligatorias,
+-   tipos esperados,
+-   claves primarias,
+-   restricciones de rango,
+-   valores permitidos,
+-   metadatos de diccionario,
+-   políticas de definición conceptual.
+
+Esto permite validar consistencia estructural antes de registrar o publicar resultados.
+
+## Principios de reproducibilidad
+
+Este repositorio está diseñado bajo los siguientes principios:
+
+### 1. Fuente pública preservada
+
+La fuente cruda original de dominio público se conserva dentro del repositorio para permitir reconstrucción completa del pipeline.
+
+### 2. Separación entre artefactos finales y outputs pesados
+
+Se versionan los insumos estructurales y los productos finales tabulares clave, mientras que los outputs pesados, temporales o regenerables pueden excluirse con `.gitignore`.
+
+### 3. Especificación antes que ambigüedad
+
+La semántica de variables, reglas de validación y metadatos se documenta explícitamente en archivos YAML y maestros de configuración.
+
+### 4. Trazabilidad de artefactos
+
+Las utilidades del proyecto permiten registrar datasets, diccionarios y catálogos de procedencia para fortalecer auditoría y gobernanza analítica.
+
+## Requisitos
+
+-   R
+-   RStudio (opcional)
+-   Paquetes usados por el pipeline, incluyendo al menos:
+    -   `data.table`
+    -   `here`
+    -   `yaml`
+    -   `arrow`
+    -   `readr`
+    -   `writexl`
+    -   `digest`
+
+## Ejecución sugerida
+
+Correr los scripts en el siguiente orden:
+
+``` r
+source("scripts/00_setup_packages.R")
+source("scripts/01_import_harmonize_life_table_mortality.R")
+source("scripts/02_interpolate_life_table_abridged_annual.R")
+source("scripts/03_expand_life_table_single_age_annual.R")
+source("scripts/04_visual_qc_life_tables_to_word.R")
+```
+
+## Convención de versionamiento recomendada
+
+Se recomienda versionar de forma explícita:
+
+-   insumos públicos originales;
+-   maestros y specs;
+-   funciones del pipeline;
+-   scripts de ejecución;
+-   datasets finales tabulares ligeros;
+-   diccionarios extendidos;
+-   índices de reportes y metadatos textuales.
+
+No es necesario versionar outputs regenerables pesados, cachés, binarios intermedios ni documentos derivados si pueden reconstruirse desde el pipeline.
+
+## Procedencia de datos
+
+La fuente base del proyecto corresponde a una **fuente pública** preservada dentro de `data/raw/life_table_mortality/`. Toda fuente pública incluida en el repositorio debe acompañarse de documentación clara sobre:
+
+-   nombre de la fuente;
+-   institución productora;
+-   periodo de cobertura;
+-   fecha de descarga o consolidación;
+-   notas metodológicas relevantes.
+
+## Uso esperado del repositorio
+
+Este repositorio está pensado para:
+
+-   auditoría metodológica;
+-   verificación externa;
+-   colaboración reproducible;
+-   actualización futura del pipeline;
+-   reutilización como base para estudios demográficos y de mortalidad.
+
+## Recomendación editorial
+
+Para fortalecer el carácter de “repo de paper”, conviene complementar este README con:
+
+-   una sección de **fuente de datos** más detallada;
+-   una nota metodológica corta sobre la interpolación anual;
+-   una sección de **limitaciones**;
+-   una licencia de uso de datos si aplica además de la licencia de código.
+
+## Licencia
+
+Este repositorio incluye un archivo `LICENSE` en GitHub. El uso del código y de los artefactos debe respetar esa licencia y las condiciones de uso de la fuente pública original.

@@ -1,0 +1,3 @@
+sex_id,sex_label,sex_label_es,omop_domain_id,is_omop_concept_id
+8507,Male,Masculino,person,TRUE
+8532,Female,Femenino,person,TRUE

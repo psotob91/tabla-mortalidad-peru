@@ -1,0 +1,166 @@
+# ============================================================
+# .gitignore — tabla-mortalidad-peru
+# Reglas pensadas para preservar reproducibilidad sin versionar
+# artefactos pesados, temporales o regenerables.
+# ============================================================
+
+# ============================================================
+# 1. R / RStudio / sesión
+# ============================================================
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# renv (descomentar según estrategia del proyecto)
+# renv/library/
+# renv/staging/
+# renv/python/
+
+# ============================================================
+# 2. Sistema operativo / editores
+# ============================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# ============================================================
+# 3. Logs y temporales
+# ============================================================
+*.log
+*.tmp
+*.temp
+*.bak
+*.out
+*.aux
+*.toc
+*.lof
+*.lot
+*.gz
+*.zip
+
+# ============================================================
+# 4. Documentos derivados / renders
+# ============================================================
+*.html
+*_files/
+.quarto/
+
+# Documentos de salida no esenciales
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.pptm
+
+# PDFs: por defecto ignorar, excepto si luego deseas liberar uno puntual
+*.pdf
+
+# ============================================================
+# 5. Datos binarios pesados o regenerables (cualquier ubicación)
+# ============================================================
+*.rds
+*.rda
+*.RData
+*.feather
+*.parquet
+
+# ============================================================
+# 6. JSON / YAML auxiliares generados
+# ============================================================
+# Ignorar JSON por defecto salvo que se versione uno explícitamente
+*.json
+
+# ============================================================
+# 7. Carpetas de outputs regenerables
+# ============================================================
+outputs/
+docs/
+
+# QC y derivados regenerables
+data/derived/
+
+# Catálogos generados automáticamente (si luego deseas versionarlos, revertir selectivamente)
+data/_catalog/
+
+# Reports generados: ignorar todo por defecto
+reports/
+
+# ============================================================
+# 8. Regla general conservadora para data tabular pesada
+# ============================================================
+# Ignorar tabulares por defecto en cualquier ubicación...
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.ods
+
+# ============================================================
+# 9. EXCEPCIONES: archivos que SÍ deben versionarse
+# ============================================================
+
+# Proyecto y control de versión
+!.gitignore
+!*.Rproj
+!README.qmd
+!README.md
+!LICENSE
+
+# Documentación estructural y fuente de verdad
+!*.md
+!*.txt
+!tree_project.txt
+!Fuente-de-verdad-de-estructura-de-proyecto.txt
+!arbol-estructura.R
+
+# Código fuente
+!R/
+!R/**/*.R
+!scripts/
+!scripts/**/*.R
+!config/
+!config/**/*.R
+!config/**/*.yml
+!config/**/*.yaml
+!config/**/*.csv
+
+# Mantener explícitamente los maestros esperados
+!config/maestro_location_dept.csv
+!config/maestro_sex_omop.csv
+!config/parametros-proyecto.R
+!config/spec_life_table_mortality.yml
+!config/spec_life_table_mortality_annual_abridged.yml
+!config/spec_life_table_mortality_single_age.yml
+
+# Fuente pública cruda que sí deseas preservar
+!data/
+!data/raw/
+!data/raw/life_table_mortality/
+!data/raw/life_table_mortality/mortalidad_combinada_peru.xlsx
+
+# Salidas finales ligeras necesarias para auditoría / replicación sustantiva
+!data/final/
+!data/final/life_table_mortality/
+!data/final/life_table_mortality/ref_life_table_mortality.csv
+!data/final/life_table_mortality/ref_life_table_mortality_dictionary_ext.csv
+!data/final/life_table_mortality/annual_abridged/
+!data/final/life_table_mortality/annual_abridged/ref_life_table_mortality_annual_abridged.csv
+!data/final/life_table_mortality/annual_abridged/ref_life_table_mortality_annual_abridged_dictionary_ext.csv
+!data/final/life_table_mortality/single_age/
+!data/final/life_table_mortality/single_age/ref_life_table_mortality_single_age.csv
+!data/final/life_table_mortality/single_age/ref_life_table_mortality_single_age_dictionary_ext.csv
+
+# Índices ligeros de reportes visuales
+!reports/
+!reports/visual_qc_life_table_mortality/
+!reports/visual_qc_life_table_mortality/*index.csv
+
+# ============================================================
+# 10. Excepciones opcionales futuras
+# ============================================================
+# Si luego quieres versionar PDFs específicos de reporte, agrega líneas como:
+# !reports/visual_qc_life_table_mortality/mi_reporte_final.pdf

@@ -1,0 +1,92 @@
+dataset_id: "life_table_mortality_peru_quinquenal"
+table_name: "life_table_mortality_result"
+
+primary_key: ["period_start_year", "period_end_year", "age_start", "sex_id", "location_id", "life_table_label"]
+
+required_columns:
+  period_label: "character"
+  period_start_year: "integer"
+  period_end_year: "integer"
+
+  location_id: "integer"
+  location_name: "character"
+
+  sex_id: "integer"
+  sex_source_value: "character"
+
+  life_table_label: "character"
+
+  age_start: "integer"
+  age_interval_width: "integer"
+
+  mx: "numeric"
+  qx: "numeric"
+  px_5y: "numeric"
+  lx: "numeric"
+  dx: "numeric"
+  Lx: "numeric"
+  Tx: "numeric"
+  ex: "numeric"
+
+constraints:
+  period_start_year: {min: 1900, max: 2100, allow_na: false}
+  period_end_year:   {min: 1900, max: 2100, allow_na: false}
+
+  location_id: {min: 0, max: 25, allow_na: false}
+
+  sex_id:
+    allowed_values: [8507, 8532]
+    allow_na: false
+
+  age_start: {min: 0, max: 130, allow_na: false}
+  age_interval_width: {min: 1, max: 10, allow_na: true}
+
+  mx:  {min: 0, allow_na: false}
+  qx:  {min: 0, max: 1, allow_na: false}
+  px_5y: {min: 0, max: 1, allow_na: true}   # puede ser NA en últimas edades según fuente
+  lx:  {min: 0, allow_na: false}
+  dx:  {min: 0, allow_na: false}
+  Lx:  {min: 0, allow_na: false}
+  Tx:  {min: 0, allow_na: false}
+  ex:  {min: 0, allow_na: false}
+
+policy:
+  age_definition: "Edad al inicio del intervalo (x)."
+  year_definition: "Periodo quinquenal (period_start_year, period_end_year)."
+  location_definition: "UBIGEO departamento (00=Perú; 01–25=departamento)."
+  sex_definition: "OMOP concept_id (8507=Male; 8532=Female)."
+  units:
+    mx: "rate"
+    qx: "probability"
+    px_5y: "probability"
+    lx: "persons"
+    dx: "deaths"
+    Lx: "person_years"
+    Tx: "person_years"
+    ex: "years"
+
+dictionary:
+  period_label: {label: "Etiqueta del periodo (p.ej. 1995-2000)", omop_domain_id: "metadata", is_omop_concept_id: false}
+  period_start_year: {label: "Año inicial del periodo", units: "year", omop_domain_id: "metadata", is_omop_concept_id: false}
+  period_end_year: {label: "Año final del periodo", units: "year", omop_domain_id: "metadata", is_omop_concept_id: false}
+
+  location_id: {label: "Ubicación (UBIGEO depto)", omop_domain_id: "observation", is_omop_concept_id: false}
+  location_name: {label: "Nombre del departamento", omop_domain_id: "observation", is_omop_concept_id: false}
+
+  sex_id: {label: "Sexo (concept id)", allowed_values_label: "8507=Male; 8532=Female", omop_domain_id: "person", is_omop_concept_id: true}
+  sex_source_value: {label: "Sexo (valor fuente)", omop_domain_id: "person", is_omop_concept_id: false}
+
+  life_table_label: {label: "Descripción de la tabla de vida", omop_domain_id: "metadata", is_omop_concept_id: false}
+
+  age_start: {label: "Edad al inicio del intervalo", units: "years", omop_domain_id: "observation", is_omop_concept_id: false}
+  age_interval_width: {label: "Amplitud del intervalo de edad", units: "years", omop_domain_id: "observation", is_omop_concept_id: false}
+
+  mx: {label: "Tasa central de mortalidad m(x,n)", omop_domain_id: "measurement", is_omop_concept_id: false}
+  qx: {label: "Probabilidad de morir q(x,n)", omop_domain_id: "measurement", is_omop_concept_id: false}
+  px_5y: {label: "Probabilidad de sobrevivir P(x,x+5)", omop_domain_id: "measurement", is_omop_concept_id: false}
+  lx: {label: "Sobrevivientes al inicio l(x)", omop_domain_id: "measurement", is_omop_concept_id: false}
+  dx: {label: "Defunciones d(x,n)", omop_domain_id: "measurement", is_omop_concept_id: false}
+  Lx: {label: "Personas-año L(x,n)", omop_domain_id: "measurement", is_omop_concept_id: false}
+  Tx: {label: "Personas-año acumuladas T(x)", omop_domain_id: "measurement", is_omop_concept_id: false}
+  ex: {label: "Esperanza de vida e(x)", units: "years", omop_domain_id: "measurement", is_omop_concept_id: false}
+  

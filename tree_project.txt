@@ -1,0 +1,78 @@
+PROJECT ROOT: C:/Users/Usuario/OneDrive/Consultorias_Personales/Carga-CDC-Peru-2023/carga-enfermedad-peru-2018-2024/tabla-mortalidad-peru
+
+└─ arbol-estructura.R
+└─ config/
+  └─ maestro_location_dept.csv
+  └─ maestro_sex_omop.csv
+  └─ parametros-proyecto.R
+  └─ spec_life_table_mortality.yml
+  └─ spec_life_table_mortality_annual_abridged.yml
+  └─ spec_life_table_mortality_single_age.yml
+└─ data/
+  └─ derived/
+    └─ qc/
+      └─ life_table_mortality/
+        └─ annual_abridged/
+          └─ qc_bad_open_flag.csv
+          └─ qc_bad_qx.csv
+          └─ qc_basic
+          └─ qc_duplicates_by_anchor.csv
+          └─ qc_lx_monotonicity_summary.csv
+          └─ qc_open_interval_count.csv
+          └─ qc_pk_duplicates.csv
+          └─ qc_tx_monotonicity_summary.csv
+        └─ qc_bad_age_width.csv
+        └─ qc_bad_period_order.csv
+        └─ qc_dropped_lima_metropolitana_rows.csv
+        └─ qc_dx_negative.csv
+        └─ qc_ex_negative.csv
+        └─ qc_lx_negative.csv
+        └─ qc_mx_negative.csv
+        └─ qc_open_age_interval_summary.csv
+        └─ qc_px_out_of_range.csv
+        └─ qc_qx_out_of_range.csv
+        └─ qc_Tx_negative.csv
+        └─ single_age/
+          └─ qc_basic
+          └─ qc_life_table_single_age_failures.csv
+          └─ qc_life_table_single_age_open_interval.csv
+          └─ qc_life_table_single_age_reaggregate_compare.csv
+          └─ qc_life_table_single_age_summary.csv
+  └─ final/
+    └─ life_table_mortality/
+      └─ annual_abridged/
+        └─ ref_life_table_mortality_annual_abridged.csv
+        └─ ref_life_table_mortality_annual_abridged_dictionary_ext.csv
+      └─ ref_life_table_mortality.csv
+      └─ ref_life_table_mortality_dictionary_ext.csv
+      └─ single_age/
+        └─ ref_life_table_mortality_single_age.csv
+        └─ ref_life_table_mortality_single_age_dictionary_ext.csv
+  └─ raw/
+    └─ life_table_mortality/
+      └─ mortalidad_combinada_peru.xlsx
+└─ docs
+└─ outputs
+└─ R/
+  └─ catalog_utils.R
+  └─ dictionary_utils.R
+  └─ io_utils.R
+  └─ qc_life_table_utils.R
+  └─ qc_utils.R
+  └─ registrar_dataset.R
+  └─ spec_utils.R
+└─ reports/
+  └─ visual_qc_life_table_mortality/
+    └─ visual_qc_qx_pdf_documents_index.csv
+    └─ visual_qc_qx_pdf_plots_index.csv
+    └─ visual_qc_script02_qx_annual_abridged_vs_empirical.pdf
+    └─ visual_qc_script03A_qx_shape_single_age_vs_annual_equivalent.pdf
+    └─ visual_qc_script03B_qx_reaggregated_vs_abridged.pdf
+└─ scripts/
+  └─ 00_setup_packages.R
+  └─ 01_import_harmonize_life_table_mortality.R
+  └─ 02_interpolate_life_table_abridged_annual.R
+  └─ 03_expand_life_table_single_age_annual.R
+  └─ 04_visual_qc_life_tables_to_word.R
+└─ tabla-mortalidad-peru.Rproj
+└─ tree_project.txt

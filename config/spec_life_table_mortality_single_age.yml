@@ -1,0 +1,90 @@
+dataset_id: "life_table_mortality_peru_single_age"
+table_name: "life_table_mortality_single_age_result"
+
+primary_key: ["year_id", "age_start", "sex_id", "location_id", "life_table_label"]
+
+required_columns:
+  year_id: "integer"
+
+  location_id: "integer"
+  location_name: "character"
+
+  sex_id: "integer"
+  sex_source_value: "character"
+
+  life_table_label: "character"
+
+  source_year_left: "integer"
+  source_year_right: "integer"
+  interp_weight: "numeric"
+  interp_scale: "character"
+
+  age_start: "integer"
+  age_interval_width: "integer"
+  age_interval_open: "logical"
+
+  mx: "numeric"
+  qx: "numeric"
+  px_5y: "numeric"
+  lx: "numeric"
+  dx: "numeric"
+  Lx: "numeric"
+  Tx: "numeric"
+  ex: "numeric"
+
+constraints:
+  year_id: {min: 1900, max: 2100, allow_na: false}
+
+  location_id: {min: 0, max: 25, allow_na: false}
+
+  sex_id:
+    allowed_values: [8507, 8532]
+    allow_na: false
+
+  source_year_left: {min: 1900, max: 2100, allow_na: false}
+  source_year_right: {min: 1900, max: 2100, allow_na: false}
+  interp_weight: {min: 0, max: 1, allow_na: false}
+
+  age_start: {min: 0, max: 130, allow_na: false}
+  age_interval_width: {min: 1, max: 1, allow_na: false}
+
+  mx:  {min: 0, allow_na: false}
+  qx:  {min: 0, max: 1, allow_na: false}
+  px_5y: {min: 0, max: 1, allow_na: false}
+  lx:  {min: 0, allow_na: false}
+  dx:  {min: 0, allow_na: false}
+  Lx:  {min: 0, allow_na: false}
+  Tx:  {min: 0, allow_na: false}
+  ex:  {min: 0, allow_na: false}
+
+dictionary:
+  year_id: {label: "Año calendario", units: "year", omop_domain_id: "metadata", is_omop_concept_id: false}
+  location_id: {label: "Ubicación (UBIGEO departamento)", omop_domain_id: "observation", is_omop_concept_id: false}
+  location_name: {label: "Nombre del departamento", omop_domain_id: "observation", is_omop_concept_id: false}
+  sex_id: {label: "Sexo (concept id OMOP)", allowed_values_label: "8507=Male; 8532=Female", omop_domain_id: "person", is_omop_concept_id: true}
+  sex_source_value: {label: "Sexo (valor fuente)", omop_domain_id: "person", is_omop_concept_id: false}
+  life_table_label: {label: "Descripción de la tabla de vida", omop_domain_id: "metadata", is_omop_concept_id: false}
+  source_year_left: {label: "Año ancla izquierdo", units: "year", omop_domain_id: "metadata", is_omop_concept_id: false}
+  source_year_right: {label: "Año ancla derecho", units: "year", omop_domain_id: "metadata", is_omop_concept_id: false}
+  interp_weight: {label: "Peso de interpolación", omop_domain_id: "metadata", is_omop_concept_id: false}
+  interp_scale: {label: "Escala usada para interpolación", omop_domain_id: "metadata", is_omop_concept_id: false}
+  age_start: {label: "Edad exacta x", units: "years", omop_domain_id: "observation", is_omop_concept_id: false}
+  age_interval_width: {label: "Ancho del intervalo de edad", units: "years", omop_domain_id: "observation", is_omop_concept_id: false}
+  age_interval_open: {label: "Indicador de intervalo abierto final", omop_domain_id: "metadata", is_omop_concept_id: false}
+  mx: {label: "Tasa central de mortalidad single-age", omop_domain_id: "measurement", is_omop_concept_id: false}
+  qx: {label: "Probabilidad de morir single-age", omop_domain_id: "measurement", is_omop_concept_id: false}
+  px_5y: {label: "Probabilidad de sobrevivir del intervalo anual", omop_domain_id: "measurement", is_omop_concept_id: false}
+  lx: {label: "Sobrevivientes a edad exacta x", omop_domain_id: "measurement", is_omop_concept_id: false}
+  dx: {label: "Defunciones entre x y x+1", omop_domain_id: "measurement", is_omop_concept_id: false}
+  Lx: {label: "Personas-año entre x y x+1", omop_domain_id: "measurement", is_omop_concept_id: false}
+  Tx: {label: "Personas-año acumuladas desde x", omop_domain_id: "measurement", is_omop_concept_id: false}
+  ex: {label: "Esperanza de vida a edad exacta x", units: "years", omop_domain_id: "measurement", is_omop_concept_id: false}
+
+policy:
+  age_definition: "Edad exacta simple (single age)."
+  year_definition: "Año calendario interpolado a partir de anclas en period_start_year."
+  location_definition: "UBIGEO departamento (00=Perú; 01–25=departamento)."
+  sex_definition: "OMOP concept_id (8507=Male; 8532=Female)."
+  extrapolation:
+    method: "Expansión de tabla abridged anual a edad simple bajo supuesto de hazard constante dentro de cada intervalo etario."
+    
